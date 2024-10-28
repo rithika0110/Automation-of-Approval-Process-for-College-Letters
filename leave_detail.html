@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CSS -->
+    <style>
+        body {
+            padding-top: 20px;
+            background-image: url('https://e0.pxfuel.com/wallpapers/174/934/desktop-wallpaper-glitterati-plain-by-arthouse-lilac-direct-plain-purple.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #000; /* Change text color to black */
+        }
+        .card {
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .form-control {
+            width: 100%;
+        }
+        .icon {
+            margin-right: 5px;
+        }
+        /* Lavender color for the submit button */
+        .btn-submit {
+            background-color: #E6E6FA; /* Lavender color */
+            border-color: #E6E6FA; /* Lavender color */
+            color: #000; /* Black text */
+        }
+        .btn-submit:hover {
+            background-color: #D8BFD8; /* Lavender color on hover */
+            border-color: #D8BFD8; /* Lavender color on hover */
+            color: #000; /* Black text on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Leave Request Details</h1>
+        <div class="card">
+            <div class="card-body">
+                <p><i class="fas fa-id-card icon"></i><strong>ID:</strong> {{ leave.id }}</p>
+                <p><i class="fas fa-user-graduate icon"></i><strong>ID:</strong> {{ leave.student_id }}</p>
+                <p><i class="fas fa-file-alt icon"></i><strong>Leave Type:</strong> {{ leave.leave_type }}</p>
+                <p><i class="far fa-calendar-alt icon"></i><strong>Start Date:</strong> {{ leave.start_date }}</p>
+                <p><i class="far fa-calendar-alt icon"></i><strong>End Date:</strong> {{ leave.end_date }}</p>
+                <p><i class="fas fa-comment icon"></i><strong>Reason:</strong> {{ leave.reason }}</p>
+                <p><i class="fas fa-info-circle icon"></i><strong>Status:</strong> {{ leave.status }}</p>
+            </div>
+        </div>
+
+        {% if leave.status == 'Pending' %}
+        <h2 class="mt-4">Approve or Reject</h2>
+        <form action="{{ url_for('leave_detail', leave_id=leave.id) }}" method="post">
+            <div class="form-group">
+                <label for="status"><i class="fas fa-check-circle icon"></i>Status:</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="Approved">Approve</option>
+                    <option value="Rejected">Reject</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comments"><i class="fas fa-comment icon"></i>Comments:</label>
+                <textarea id="comments" name="comments" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-paper-plane icon"></i>Submit</button>
+        </form>
+        {% endif %}
+
+        <h2 class="mt-4">Approval History</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-id-badge icon"></i>Reviewer ID</th>
+                        <th><i class="fas fa-info-circle icon"></i>Status</th>
+                        <th><i class="fas fa-comment icon"></i>Comments</th>
+                        <th><i class="far fa-calendar-alt icon"></i>Approved At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for approval in approvals %}
+                    <tr>
+                        <td>{{ approval.reviewer_id }}</td>
+                        <td>{{ approval.status }}</td>
+                        <td>{{ approval.comments }}</td>
+                        <td>{{ approval.approved_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #e1c4c9;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://i.pinimg.com/564x/03/fa/47/03fa47d6859c508ec0ff68db968b86cb.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #171717;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #181818;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #000;
+        }
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+            transition: box-shadow 0.3s;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            border-color: #000;
+        }
+        .btn-primary {
+            background-color: #000;
+            border-color: #000;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .alert {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-container">
+        <h1 class="text-center">Login</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('login') }}" method="post">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

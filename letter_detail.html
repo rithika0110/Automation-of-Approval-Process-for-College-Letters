@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://e0.pxfuel.com/wallpapers/174/934/desktop-wallpaper-glitterati-plain-by-arthouse-lilac-direct-plain-purple.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .approval-form {
+            margin-top: 20px;
+        }
+
+        /* Custom Lavender Button */
+        .btn-lavender {
+            background-color: #e6e6fa; /* Lavender color */
+            border-color: #e6e6fa; /* Lavender color for border */
+            color: #6a5acd; /* Medium purple text color */
+        }
+
+        .btn-lavender:hover {
+            background-color: #d8bfd8; /* Light lavender on hover */
+            border-color: #d8bfd8; /* Light lavender border on hover */
+            color: #6a5acd; /* Medium purple text color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1><i class="fas fa-file-alt"></i> Letter Details</h1>
+
+        <!-- Letter Details Card -->
+        <div class="card">
+            <div class="card-body">
+                <p><strong><i class="fas fa-id-card"></i> ID:</strong> {{ letter.id }}</p>
+                <p><strong><i class="fas fa-user"></i> Student ID:</strong> {{ letter.student_id }}</p>
+                <p><strong><i class="fas fa-tag"></i> Type:</strong> {{ letter.type }}</p>
+                <p><strong><i class="fas fa-file-alt"></i> Content:</strong> {{ letter.content }}</p>
+                <p><strong><i class="fas fa-info-circle"></i> Status:</strong> {{ letter.status }}</p>
+            </div>
+        </div>
+
+        <!-- Approval Form (if status is Pending) -->
+        {% if letter.status == 'Pending' %}
+        <h2 class="mt-4"><i class="fas fa-edit"></i> Approve or Reject</h2>
+        <form action="{{ url_for('letter_detail', letter_id=letter.id) }}" method="post" class="approval-form">
+            <div class="form-group">
+                <label for="status"><i class="fas fa-check-circle"></i> Status:</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="Approved">Approve</option>
+                    <option value="Rejected">Reject</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comments"><i class="fas fa-comment-alt"></i> Comments:</label>
+                <textarea id="comments" name="comments" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-lavender"><i class="fas fa-paper-plane"></i> Submit</button>
+        </form>
+        {% endif %}
+
+        <!-- Approval History Table -->
+        <h2 class="mt-4"><i class="fas fa-history"></i> Approval History</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Reviewer ID</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                        <th><i class="fas fa-comment-alt"></i> Comments</th>
+                        <th><i class="fas fa-calendar-check"></i> Approved At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for approval in approvals %}
+                    <tr>
+                        <td>{{ approval.reviewer_id }}</td>
+                        <td>{{ approval.status }}</td>
+                        <td>{{ approval.comments }}</td>
+                        <td>{{ approval.approved_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

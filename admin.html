@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome for icons -->
+    <style>
+        body {
+            background-image: url('https://e0.pxfuel.com/wallpapers/174/934/desktop-wallpaper-glitterati-plain-by-arthouse-lilac-direct-plain-purple.jpg'); /* Background image URL */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Do not repeat the background image */
+            background-color: #f8f9fa; /* Fallback color if image is not available */
+            color: #343a40; /* Dark gray text */
+        }
+
+        .container {
+            max-width: 100%; /* Extend container to the ends */
+            background-color: rgba(255, 255, 255, 0.9); /* White background with transparency */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 30px auto; /* Center the container */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            margin-top: -5px;
+            background-color: #e6e6fa; /* Lavender button */
+            border-color: #e6e6fa; /* Lavender border */
+            color: #6a5acd; /* Darker lavender text */
+        }
+
+        .btn-logout:hover {
+            background-color: #d8bfd8; /* Darker lavender on hover */
+            border-color: #d8bfd8; /* Darker lavender border on hover */
+            color: #4b0082; /* Darker lavender text on hover */
+        }
+
+        .table {
+            background-color: #ffffff; /* White background for table */
+        }
+
+        th {
+            background-color: #e6e6fa; /* Lavender header */
+            color: #6a5acd; /* Darker lavender text */
+        }
+
+        th, td {
+            vertical-align: middle; /* Center-align content vertically */
+        }
+
+        .btn-view {
+            background-color: #e6e6fa; /* Lavender button */
+            border-color: #e6e6fa; /* Lavender border */
+            color: #6a5acd; /* Darker lavender text */
+        }
+
+        .btn-view:hover {
+            background-color: #d8bfd8; /* Darker lavender on hover */
+            border-color: #d8bfd8; /* Darker lavender border on hover */
+            color: #4b0082; /* Darker lavender text on hover */
+        }
+
+        hr {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border-color: #6c757d; /* Gray divider */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-user-shield"></i> Welcome, {{ session['username'] }}</h1> <!-- Added user shield icon -->
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a> <!-- Added sign out icon -->
+        <hr>
+
+        <h2><i class="fas fa-clock"></i> Pending Letters</h2> <!-- Added clock icon -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-id-badge"></i> ID</th> <!-- Added ID badge icon -->
+                        <th><i class="fas fa-user-graduate"></i> Student ID</th> <!-- Added student graduate icon -->
+                        <th><i class="fas fa-tag"></i> Type</th> <!-- Added tag icon -->
+                        <th><i class="fas fa-file-alt"></i> Content</th> <!-- Added file icon -->
+                        <th><i class="fas fa-info-circle"></i> Status</th> <!-- Added info circle icon -->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for letter in letters %}
+                    <tr>
+                        <td>{{ letter.id }}</td>
+                        <td>{{ letter.student_id }}</td>
+                        <td>{{ letter.type }}</td>
+                        <td>{{ letter.content }}</td>
+                        <td>{{ letter.status }}</td>
+                        <td>
+                            <a href="{{ url_for('letter_detail', letter_id=letter.id) }}" class="btn btn-primary btn-sm btn-view"><i class="fas fa-eye"></i> View Details</a> <!-- Added eye icon -->
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

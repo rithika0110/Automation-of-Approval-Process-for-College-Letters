@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter and Leave Approval</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dbd0e6; /* Lilac background color */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Better font */
+            color: #333; /* Text color */
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            color: #6a5acd; /* Heading color */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn-success {
+            margin-top: 20px;
+            border-radius: 20px; /* Make buttons more rounded */
+        }
+        .table {
+            border-color: #6a5acd; /* Table border color */
+        }
+        th {
+            background-color: #f8f9fa; /* Header background color */
+            border-color: #ccc; /* Header border color */
+            border-style: solid; /* Add border style */
+            border-width: 1px; /* Add border width */
+            padding: 8px; /* Add padding */
+            text-align: center; /* Center text */
+        }
+        .view-btn {
+            background-color: #6a5acd; /* Same color as heading */
+            border-color: #6a5acd; /* Same color as heading */
+        }
+        .view-btn:hover {
+            background-color: #483d8b; /* Darker shade for hover effect */
+            border-color: #483d8b; /* Darker shade for hover effect */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>LETTER PORTAL</h1>
+
+        <h2 class="mt-4">Letters for Approval</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Content</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for letter in letters %}
+                <tr>
+                    <td>{{ letter.id }}</td>
+                    <td>{{ letter.type }}</td>
+                    <td>{{ letter.content }}</td>
+                    <td>{{ letter.status }}</td>
+                    <td>
+                        <a href="/letter/{{ letter.id }}" class="btn btn-primary btn-sm view-btn">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 class="mt-4">Leave Requests for Approval</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student ID</th>
+                    <th>Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.id }}</td>
+                    <td>{{ leave.student_id }}</td>
+                    <td>{{ leave.leave_type }}</td>
+                    <td>{{ leave.start_date }}</td>
+                    <td>{{ leave.end_date }}</td>
+                    <td>{{ leave.reason }}</td>
+                    <td>{{ leave.status }}</td>
+                    <td>
+                        <a href="/leave/{{ leave.id }}" class="btn btn-primary btn-sm view-btn">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="mt-4">Submit a New Letter</h2>
+                <a href="/submit" class="btn btn-success btn-block">Submit Letter</a>
+            </div>
+            <div class="col-md-6">
+                <h2 class="mt-4">Submit a New Leave Request</h2>
+                <a href="/submit_leave" class="btn btn-success btn-block">Submit Leave Request</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
